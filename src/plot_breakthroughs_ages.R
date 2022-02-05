@@ -15,8 +15,9 @@ plot_breakthroughs_ages <- function(df) {
   require(epical)
   
   # convert MMWR.week to dates
+  # updated because CDC changed MMWR.week format
   df <- df %>%
-    mutate(Date = epi_week_date(MMWR.week, "2021", system = "cdc")) %>%
+    mutate(Date = epi_week_date(str_sub(MMWR.week, 5), str_sub(MMWR.week, 1, 4), system = "cdc")) %>%
     mutate(Age.group = as.factor(Age.group))
   
   # suumararize 
