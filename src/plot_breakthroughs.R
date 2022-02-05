@@ -15,8 +15,10 @@ plot_breakthroughs <- function(df) {
   require(epical)
   
   # convert MMWR.week to dates
+  # updated because CDC changed MMWR.week format
   df <- df %>%
-    mutate(Date = epi_week_date(MMWR.week, "2021", system = "cdc"))
+    mutate(MMWR.week = as.character(MMWR.week)) %>%
+    mutate(Date = epi_week_date(str_sub(MMWR.week, 5), str_sub(MMWR.week, 1, 4), system = "cdc"))
   
   # summarize cases by vaccine status
   df_cases <- df %>%
